@@ -1,0 +1,44 @@
+# parser_service_updated_prompts/requirements.txt
+
+# Core ML/DL packages
+#torch>=2.0.0
+#torchvision>=0.15.0
+#torchaudio>=2.0.0
+transformers==4.51.3
+accelerate==1.6.0
+bitsandbytes==0.45.5
+
+# Vision and Image Processing
+opencv-python-headless==4.11.0.86
+Pillow==10.4.0
+ultralytics==8.3.128 # YOLOv8
+supervision==0.25.1  # Table detection visualization
+
+# Web Scraping and HTML Processing
+selenium==4.31.0
+beautifulsoup4==4.12.2
+requests==2.32.3
+
+# Data Processing
+pandas==2.2.3
+numpy==1.26.4
+astor==0.8.1
+#scikit-learn>=1.3.0
+
+# Web Application
+streamlit==1.45.1
+
+# Text Processing
+#sentence-transformers>=2.2.0
+
+# Optional: GPU support for PaddlePaddle
+paddlepaddle-gpu==2.6.2  # Uncomment if GPU support is needed
+paddleocr==2.7.3 # Uncomment if using PaddleOCR
+
+# Development and Debugging
+python-dotenv==1.1.0  # For environment variables
+tqdm==4.65.0  # For progress bars
+
+# Note: 
+# - Ensure correct PyTorch for CUDA: https://pytorch.org/get-started/locally/
+# - `sentencepiece` and `protobuf` are usually installed with transformers. 

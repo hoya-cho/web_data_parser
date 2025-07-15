@@ -1,0 +1,53 @@
+# Use PyTorch CUDA base image
+FROM pytorch/pytorch:2.3.0-cuda11.8-cudnn8-devel
+
+# Install git and other system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    # For OpenCV and other graphics/display libraries
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    # For Selenium/web scraping (headless browser dependencies)
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libxss1 \
+    libgbm1 \
+    libgtk-3-0 \
+    libasound2 \
+    # Additional Chrome and ChromeDriver dependencies
+    wget \
+    unzip \
+    libappindicator1 \
+    libindicator7 \
+    fonts-liberation \
+    libdrm-dev \
+    # Clean up apt lists to reduce image size
+    && rm -rf /var/lib/apt/lists/*
+# Set the working directory
+WORKDIR /app
+
+# Clone the repository
+RUN git clone https://github.com/bluewhalekr/mcai_space.git /app/mcai_space && \
+    cd /app/mcai_space && \
+    git checkout feature/webdata_parser_demo
+
+# Set the working directory to the parser_service_updated_prompts directory
+WORKDIR /app/mcai_space
+
+# Copy requirements.txt and install dependencies
+COPY parser_service_updated_prompts/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set PYTHONPATH to include the parent directory
+ENV PYTHONPATH=/app/mcai_space:$PYTHONPATH
+
+# Set Hugging Face token and login
+
+# Make port 8501 available (Streamlit default port)
+EXPOSE 8501
+
+# Command to run the Streamlit application
+CMD ["python", "-m", "streamlit", "run", "parser_service_updated_prompts/web_demo.py"] 
